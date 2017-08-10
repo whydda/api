@@ -3,6 +3,6 @@
   <mapper namespace="com.example.api.service.mapper.CommonMapper">
     <!-- TEST -->
      <select id="selectTest" resultType="hashmap">
-      SELECT 1 FROM DUAL
+      select * from USER
      </select>
   </mapper>

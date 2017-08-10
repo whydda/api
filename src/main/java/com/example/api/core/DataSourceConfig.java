@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages="kr.co.event.api.service.mapper")
+@MapperScan(basePackages="com.example.api.service.mapper")
 @EnableTransactionManagement
 public class DataSourceConfig {
 
