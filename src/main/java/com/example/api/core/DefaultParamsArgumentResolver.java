@@ -4,7 +4,12 @@ package com.example.api.core;
  * Created by whydd on 2017-07-13.
  */
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
+import org.codehaus.jettison.json.JSONTokener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -17,11 +22,16 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by whydd on 2017-03-03.
  */
 public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResolver {
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
@@ -36,9 +46,19 @@ public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResol
             Iterator iterator = nativeWebRequest.getParameterNames();
 
             while(iterator.hasNext()) {
+                objectMapper = new ObjectMapper();
                 String key = (String)iterator.next();
                 String value = nativeWebRequest.getParameter(key);
-                defaultParams.getMap().put(key, value);
+                Object json = new JSONTokener(value).nextValue();
+                if(json instanceof JSONObject){
+                    objectMapper.readValue(value, Map.class).forEach((k, v) ->
+                            defaultParams.put((String) k, v))
+                    ;
+                }else if (json instanceof JSONArray){
+                    defaultParams.put(key, objectMapper.readValue(value, List.class));
+                } else {
+                    defaultParams.put(key, value);
+                }
             }
 
             if(nativeWebRequest.getNativeRequest() instanceof MultipartHttpServletRequest){
