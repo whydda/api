@@ -2,9 +2,10 @@ package com.example.api.controller.login;
 
 import com.example.api.core.DefaultParams;
 import com.example.api.core.ResponseMap;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.api.service.common.CommonService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,28 +13,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by whydd on 2017-07-13.
  */
+@Slf4j
 @RestController
 public class LoginController{
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+
+    private CommonService CommonService;
+
+    @Autowired
+    public LoginController(CommonService commonService){
+        this.CommonService = commonService;
+    }
 
     @RequestMapping(value="/login/{id}", method = RequestMethod.GET)
-    public Map<String, Object> loginPros(@PathVariable("id") String id, DefaultParams defaultParams, Map<String, Object> resMap, HttpSession session) throws Exception {
-
-        if(StringUtils.equals(id, "whydda")){
-            session.setAttribute("ROLE", "USER");
-            Map<String, String> userMap = new HashMap();
-            userMap.put("userId", id);
-            session.setAttribute("userMap", userMap);
-        }
-
-        return new ResponseMap().ok();
+    public Map<String, Object> loginPros(@PathVariable("id") String id, DefaultParams defaultParams, ModelMap resMap) throws Exception {
+        List<Map<String, Object>> userList = CommonService.selectTest();
+        resMap.addAttribute("passwd", defaultParams.get("passwd"));
+        resMap.addAttribute("id", id);
+        resMap.addAttribute("params", defaultParams.getMap());
+        resMap.addAttribute("userList", userList);
+        return new ResponseMap().ok("환영합니다.", resMap);
     }
+
 
     @RequestMapping(value="/logout", method=RequestMethod.GET)
     public Map<String, Object> logout(HttpServletRequest request) throws Exception{
@@ -44,8 +50,8 @@ public class LoginController{
     @RequestMapping(value="/test/log", method = RequestMethod.GET)
     public Map<String, Object> test(DefaultParams defaultParams, Map<String, Object> resMap, HttpSession session) throws Exception {
 
-        LOGGER.debug("로그 잘 남는것입니까?");
-        LOGGER.debug("---------------------");
+        log.debug("로그 잘 남는것입니까?");
+        log.debug("---------------------");
         return new ResponseMap().ok(defaultParams.getMap());
     }
 }

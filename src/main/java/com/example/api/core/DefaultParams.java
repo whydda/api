@@ -1,18 +1,19 @@
 package com.example.api.core;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by whydd on 2017-03-03.
+ * Created by whydd on 2019-03-03.
  */
-public class DefaultParams {
-    private Map<String, Object> map;
+public class DefaultParams{
+    private HashMap<String, Object> map;
 
-    public Map getMap() {
-        return map;
+    public Map<String, Object> getMap(){
+        return this.map;
     }
 
-    public void setMap(Map<String, Object> map) {
+    public void setMap(HashMap<String, Object> map) {
         this.map = map;
     }
 
@@ -20,7 +21,7 @@ public class DefaultParams {
         this.map.put(key, value);
     }
 
-    public Map<String, Object> get(String key){
-        return (Map<String, Object>) map.get(key);
+    public String get(String key){
+        return String.valueOf(this.map.get(key));
     }
 }

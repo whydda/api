@@ -25,14 +25,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         if(request.getSession().getAttribute("ROLE") == null){
-            throw new AuthException(HttpStatus.UNAUTHORIZED.value(), "세션이 만료 되었습니다.");
+            throw new ApiException(HttpStatus.UNAUTHORIZED.value(), "세션이 만료 되었습니다.");
         }
 
         Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
         if(pathVariables != null){
             if(!pathVariablesChk(pathVariables)){
-                throw new AuthException(HttpStatus.UNAUTHORIZED.value(), "잘못된 경로로 접근하였습니다.");
+                throw new ApiException(HttpStatus.UNAUTHORIZED.value(), "잘못된 경로로 접근하였습니다.");
             }
         }
 

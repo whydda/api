@@ -1,15 +1,10 @@
 package com.example.api.core;
 
-/**
- * Created by whydd on 2017-07-13.
- */
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.codehaus.jettison.json.JSONTokener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -30,8 +25,7 @@ import java.util.Map;
  */
 public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResolver {
 
-    @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
@@ -46,7 +40,6 @@ public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResol
             Iterator iterator = nativeWebRequest.getParameterNames();
 
             while(iterator.hasNext()) {
-                objectMapper = new ObjectMapper();
                 String key = (String)iterator.next();
                 String value = nativeWebRequest.getParameter(key);
                 Object json = new JSONTokener(value).nextValue();
@@ -63,7 +56,7 @@ public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResol
 
             if(nativeWebRequest.getNativeRequest() instanceof MultipartHttpServletRequest){
                 MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)nativeWebRequest.getNativeRequest();
-                defaultParams.getMap().put("multipartHttpServletRequest", multipartHttpServletRequest);
+                defaultParams.put("multipartHttpServletRequest", multipartHttpServletRequest);
             }
 
             //세션정보가 있는지 확인한다. 세션정보가 있을 경우 ROLE 이라는 param을 만든다.

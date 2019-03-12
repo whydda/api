@@ -16,8 +16,13 @@ import java.util.Map;
  */
 @RestController
 public class CommonController {
+
+    private CommonService commonService;
+
     @Autowired
-    CommonService commonService;
+    public CommonController(CommonService commonService){
+        this.commonService = commonService;
+    }
 
     @RequestMapping(value="/test")
     public Map<String, Object> getUser(DefaultParams defaultParams, ModelMap model) throws Exception {

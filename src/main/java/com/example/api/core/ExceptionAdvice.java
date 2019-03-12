@@ -25,10 +25,4 @@ public class ExceptionAdvice {
         LOGGER.error(ae.getMessage(), ae, ae.getStackTrace());
         return new ResponseMap().internalServerError(ae.getErrorCode(), ae.getMessage());
     }
-
-    @ExceptionHandler(AuthException.class)
-    public Map<String, Object> handleApiException(AuthException ae) throws Exception{
-        LOGGER.error(ae.getMessage(), ae, ae.getStackTrace());
-        return new ResponseMap().unauthorized(ae.getErrorCode(), ae.getMessage());
-    }
 }
