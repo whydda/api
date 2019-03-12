@@ -9,6 +9,7 @@ maven 프로젝트로 import하시면 됩니다.
 ---
 
 ##서버구동방법
+
 1. h2서버 설치
 
     - [h2다운로드 링크](http://www.h2database.com/html/download.html)
