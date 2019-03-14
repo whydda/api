@@ -6,10 +6,7 @@ import com.example.api.service.common.CommonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,7 +27,7 @@ public class LoginController{
         this.CommonService = commonService;
     }
 
-    @RequestMapping(value="/login/{id}", method = RequestMethod.GET)
+    @GetMapping(value="/login/{id}")
     public Map<String, Object> loginPros(@PathVariable("id") String id, DefaultParams defaultParams, ModelMap resMap) throws Exception {
         List<Map<String, Object>> userList = CommonService.selectTest();
         resMap.addAttribute("passwd", defaultParams.get("passwd"));
@@ -41,13 +38,13 @@ public class LoginController{
     }
 
 
-    @RequestMapping(value="/logout", method=RequestMethod.GET)
+    @GetMapping(value="/logout")
     public Map<String, Object> logout(HttpServletRequest request) throws Exception{
         request.getSession().invalidate();
         return new ResponseMap().ok("로그아웃 처리 되었습니다.");
     }
 
-    @RequestMapping(value="/test/log", method = RequestMethod.GET)
+    @GetMapping(value="/test/log")
     public Map<String, Object> test(DefaultParams defaultParams, Map<String, Object> resMap, HttpSession session) throws Exception {
 
         log.debug("로그 잘 남는것입니까?");

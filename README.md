@@ -21,3 +21,9 @@
 3. api 호출 확인
 
 ---
+
+
+##swagger적용
+1. dependencied 추가 
+
+    -  

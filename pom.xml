@@ -8,11 +8,11 @@
 		<version>2.0.8.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>co.kr.sunny</groupId>
-	<artifactId>ykapi</artifactId>
+	<groupId>com.example.api</groupId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ykapi</name>
-	<description>Sunnyyk for Spring Boot</description>
+	<name>api</name>
+	<description>test for Spring Boot</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,21 +65,12 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- DBCP POOL -->
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>2.4.5</version>
-		</dependency>
-
 		<!-- log -->
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
 			<artifactId>log4jdbc</artifactId>
 			<version>1.2</version>
 		</dependency>
-
-
 
 		<!-- common -->
 		<dependency>
@@ -101,6 +92,19 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.197</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
