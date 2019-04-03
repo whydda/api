@@ -22,7 +22,7 @@ public class DataSourceConfig {
 
      @Autowired
      private DataSourceProperties properties;
-     
+
      @Bean(destroyMethod="close")
      public DataSource dataSource() {
     	 HikariConfig config = new HikariConfig();
@@ -41,20 +41,23 @@ public class DataSourceConfig {
 
          return new HikariDataSource(config);
      }
-     
+
      @Bean
      public SqlSessionFactory sqlSessionFactory(DataSource ds) throws Exception {
-    	 
+
     	 SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
     	 sqlSessionFactory.setDataSource(ds);
-    	 sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:sqlmap/*Sql.xml"));
-     
+         //Mapper 설정
+         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:sqlmap/*Sql.xml"));
+         //Config 설정
+         sqlSessionFactory.setConfigLocation( new PathMatchingResourcePatternResolver().getResource("classpath:config/mybatis-config.xml"));
+
     	 return (SqlSessionFactory) sqlSessionFactory.getObject();
      }
-     
+
      @Bean
      public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
-    	 
+
     	 return new SqlSessionTemplate(sqlSessionFactory);
      }
 }
