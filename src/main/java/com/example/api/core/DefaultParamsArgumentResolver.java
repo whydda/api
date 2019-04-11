@@ -1,5 +1,6 @@
 package com.example.api.core;
 
+import com.example.api.util.ApiUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jettison.json.JSONArray;
@@ -15,10 +16,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by whydd on 2017-03-03.
@@ -42,7 +40,7 @@ public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResol
             while(iterator.hasNext()) {
                 String key = (String)iterator.next();
                 String value = nativeWebRequest.getParameter(key);
-                Object json = new JSONTokener(value).nextValue();
+                Object json = ApiUtils.customJSONTokener(value);
                 if(json instanceof JSONObject){
                     objectMapper.readValue(value, Map.class).forEach((k, v) ->
                             defaultParams.put((String) k, v))

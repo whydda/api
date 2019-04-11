@@ -2,6 +2,9 @@ package com.example.api.util;
 
 import com.example.api.core.DefaultParams;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONTokener;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -90,6 +93,21 @@ public class ApiUtils {
             return str.getBytes("UTF-8").length;
         }else{
             return str.getBytes(charactrer).length;
+        }
+
+    }
+
+    /**
+     *
+     * @param s
+     * @return
+     * @throws JSONException
+     */
+    public static Object customJSONTokener(String s) throws JSONException {
+        if(!StringUtils.isEmpty(s)){
+            return new JSONTokener(s).nextValue();
+        }else{
+            return "";
         }
 
     }
