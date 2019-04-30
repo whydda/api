@@ -19,7 +19,7 @@ public class ApiUtils {
      */
     public static void chkParams(DefaultParams defaultParams, String... arrRequiedValue){
         for(String key : arrRequiedValue){
-            if(null == defaultParams.get(key)){
+            if(null == defaultParams.getString(key)){
                 defaultParams.put(key, "");
             }
         }
@@ -38,7 +38,7 @@ public class ApiUtils {
         defaultParams.getMap().forEach((k,v) -> {
                     for(String key : arrRequiedValue){
                         if(key.equals(k)){
-                            if(String.valueOf(defaultParams.get(key)).equals("null") || String.valueOf(defaultParams.get(key)).length() == 0){
+                            if(String.valueOf(defaultParams.getString(key)).equals("null") || String.valueOf(defaultParams.getString(key)).length() == 0){
                                 atomicBoolean.set(false);
                                 break;
                             }
@@ -98,17 +98,22 @@ public class ApiUtils {
     }
 
     /**
-     *
+     * JSON 으로 넘어온 파라미터인지 확인
      * @param s
      * @return
      * @throws JSONException
      */
     public static Object customJSONTokener(String s) throws JSONException {
+        Object returnObj;
         if(!StringUtils.isEmpty(s)){
-            return new JSONTokener(s).nextValue();
+            try{
+                returnObj = new JSONTokener(s).nextValue();
+            }catch (JSONException e){
+                returnObj = s;
+            }
+            return returnObj;
         }else{
             return "";
         }
-
     }
 }

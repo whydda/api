@@ -21,7 +21,16 @@ public class DefaultParams{
         this.map.put(key, value);
     }
 
-    public String get(String key){
+    /**
+     * String.valueOf를 사용할 필요 없음
+     * @param key
+     * @return
+     */
+    public String getString(String key){
         return String.valueOf(this.map.get(key));
+    }
+
+    public Object get(String key){
+        return this.map.get(key);
     }
 }

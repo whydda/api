@@ -30,7 +30,7 @@ public class LoginController{
     @GetMapping(value="/login/{id}")
     public Map<String, Object> loginPros(@PathVariable("id") String id, DefaultParams defaultParams, ModelMap resMap) throws Exception {
         List<Map<String, Object>> userList = CommonService.selectTest();
-        resMap.addAttribute("passwd", defaultParams.get("passwd"));
+        resMap.addAttribute("passwd", defaultParams.getString("passwd"));
         resMap.addAttribute("id", id);
         resMap.addAttribute("params", defaultParams.getMap());
         resMap.addAttribute("userList", userList);
