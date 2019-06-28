@@ -33,6 +33,14 @@ public class ResponseMap{
         return this.responseMap();
     }
 
+    public Map<String, Object> ok(Map<String, Object> resMap) throws Exception{
+        this.resMap = new HashMap<>();
+        this.resMap.put("resMap", resMap);
+        this.resMap.put("code", HttpStatus.OK.value());
+        this.resMap.put("message", "정상처리 되었습니다.");
+        return this.responseMap();
+    }
+
     /**
      * 401
      * @return
