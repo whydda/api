@@ -17,16 +17,15 @@ import java.util.Map;
  * 단위테스트 util 기능 모음
  */
 public class Utils {
-    private String getUrlencodedParams(Map<String, Object> params){
+    private String getUrlencodedParams(Map<String, Object> params) {
         List<String> arr = new ArrayList<>();
-        params.forEach((k,v) -> {
+        params.forEach((k, v) -> {
             arr.add(k + "=" + v);
         });
         return String.join("&", arr);
     }
 
     /**
-     *
      * @param port
      * @param callUri
      * @param reqMap
@@ -34,8 +33,8 @@ public class Utils {
      * @return
      * @throws URISyntaxException
      */
-    public int callPostVerificationApi(int port, String callUri, Map<String, Object> reqMap, TestRestTemplate restTemplate) throws URISyntaxException{
-        final String baseUrl = "http://localhost:"+port+ "/" + callUri;
+    public int callPostVerificationApi(int port, String callUri, Map<String, Object> reqMap, TestRestTemplate restTemplate) throws URISyntaxException {
+        final String baseUrl = "http://localhost:" + port + "/" + callUri;
         URI uri = new URI(baseUrl);
 
         HttpHeaders headers = new HttpHeaders();
@@ -52,7 +51,6 @@ public class Utils {
     }
 
     /**
-     *
      * @param port
      * @param callUri
      * @param reqMap
@@ -60,8 +58,8 @@ public class Utils {
      * @return
      * @throws URISyntaxException
      */
-    public int callGetVerificationApi(int port, String callUri, Map<String, Object> reqMap, TestRestTemplate restTemplate) throws URISyntaxException{
-        final String baseUrl = "http://localhost:"+port+ "/" + callUri;
+    public int callGetVerificationApi(int port, String callUri, Map<String, Object> reqMap, TestRestTemplate restTemplate) throws URISyntaxException {
+        final String baseUrl = "http://localhost:" + port + "/" + callUri;
         URI uri = new URI(baseUrl);
 
         HttpHeaders headers = new HttpHeaders();

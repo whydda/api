@@ -13,13 +13,14 @@ public class ApiUtils {
 
     /**
      * 파라미터 여부 체크
+     *
      * @param defaultParams
      * @param arrRequiedValue
      * @return
      */
-    public static void chkParams(DefaultParams defaultParams, String... arrRequiedValue){
-        for(String key : arrRequiedValue){
-            if(null == defaultParams.getString(key)){
+    public static void chkParams(DefaultParams defaultParams, String... arrRequiedValue) {
+        for (String key : arrRequiedValue) {
+            if (null == defaultParams.getString(key)) {
                 defaultParams.put(key, "");
             }
         }
@@ -27,18 +28,19 @@ public class ApiUtils {
 
     /**
      * 필수값 체크
+     *
      * @param defaultParams
      * @param arrRequiedValue
      * @return
      */
-    public static boolean chkValidation(DefaultParams defaultParams, String... arrRequiedValue){
+    public static boolean chkValidation(DefaultParams defaultParams, String... arrRequiedValue) {
         AtomicBoolean atomicBoolean = new AtomicBoolean();
         atomicBoolean.set(true);
 
-        defaultParams.getMap().forEach((k,v) -> {
-                    for(String key : arrRequiedValue){
-                        if(key.equals(k)){
-                            if(String.valueOf(defaultParams.getString(key)).equals("null") || String.valueOf(defaultParams.getString(key)).length() == 0){
+        defaultParams.getMap().forEach((k, v) -> {
+                    for (String key : arrRequiedValue) {
+                        if (key.equals(k)) {
+                            if (String.valueOf(defaultParams.getString(key)).equals("null") || String.valueOf(defaultParams.getString(key)).length() == 0) {
                                 atomicBoolean.set(false);
                                 break;
                             }
@@ -52,24 +54,25 @@ public class ApiUtils {
 
     /**
      * 필수값 체크
+     *
      * @param defaultParams
      * @param arrRequiedValue
      * @return
      */
-    public static boolean chkSize(DefaultParams defaultParams, String... arrRequiedAndSizeValue){
+    public static boolean chkSize(DefaultParams defaultParams, String... arrRequiedAndSizeValue) {
         AtomicBoolean atomicBoolean = new AtomicBoolean();
         atomicBoolean.set(true);
 
-        defaultParams.getMap().forEach((k,v) -> {
-                    for(String key : arrRequiedAndSizeValue){
+        defaultParams.getMap().forEach((k, v) -> {
+                    for (String key : arrRequiedAndSizeValue) {
                         String[] arrKey = key.split("\\|");
-                        if(arrKey[0].equals(k)){
-                            try{
-                                if(String.valueOf(v).length() > Integer.parseInt(arrKey[1])){
+                        if (arrKey[0].equals(k)) {
+                            try {
+                                if (String.valueOf(v).length() > Integer.parseInt(arrKey[1])) {
                                     atomicBoolean.set(false);
                                     break;
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 log.error("데이터 파싱 오류.", e);
                             }
                         }
@@ -83,15 +86,16 @@ public class ApiUtils {
 
     /**
      * String의 byte수 체크
+     *
      * @param str
      * @param charactrer
      * @return
      * @throws Exception
      */
-    public static int getBytesLength(String str, String charactrer) throws Exception{
-        if(charactrer == null){
+    public static int getBytesLength(String str, String charactrer) throws Exception {
+        if (charactrer == null) {
             return str.getBytes("UTF-8").length;
-        }else{
+        } else {
             return str.getBytes(charactrer).length;
         }
 
@@ -99,20 +103,21 @@ public class ApiUtils {
 
     /**
      * JSON 으로 넘어온 파라미터인지 확인
+     *
      * @param s
      * @return
      * @throws JSONException
      */
     public static Object customJSONTokener(String s) throws JSONException {
         Object returnObj;
-        if(!StringUtils.isEmpty(s)){
-            try{
+        if (!StringUtils.isEmpty(s)) {
+            try {
                 returnObj = new JSONTokener(s).nextValue();
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 returnObj = s;
             }
             return returnObj;
-        }else{
+        } else {
             return "";
         }
     }

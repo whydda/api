@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-public class WebConfig implements WebMvcConfigurer{
+public class WebConfig implements WebMvcConfigurer {
 
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         DefaultParamsArgumentResolver defaultParamsArgumentResolver = new DefaultParamsArgumentResolver();
@@ -44,7 +44,6 @@ public class WebConfig implements WebMvcConfigurer{
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
-
 
 
 }
