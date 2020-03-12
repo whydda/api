@@ -1,5 +1,6 @@
 package com.example.api.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * 단위테스트 util 기능 모음
  */
+@Slf4j
 public class Utils {
     private String getUrlencodedParams(Map<String, Object> params){
         List<String> arr = new ArrayList<>();
@@ -26,7 +28,7 @@ public class Utils {
     }
 
     /**
-     *
+     * POST Request
      * @param port
      * @param callUri
      * @param reqMap
@@ -48,11 +50,36 @@ public class Utils {
                 , String.class
         );
 
+        log.info(result.getBody().toString());
+
         return result.getStatusCodeValue();
     }
 
     /**
-     *
+     * POST Request
+     * @param port
+     * @param callUri
+     * @param reqMap
+     * @param restTemplate
+     * @return
+     * @throws URISyntaxException
+     */
+    public void callPutVerificationApi(int port, String callUri, Map<String, Object> reqMap, TestRestTemplate restTemplate) throws URISyntaxException{
+        final String baseUrl = "http://localhost:"+port+ "/" + callUri;
+        URI uri = new URI(baseUrl);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "x-www-form-urlencoded", Charset.forName("UTF-8")));
+        HttpEntity request = new HttpEntity(getUrlencodedParams(reqMap), headers);
+
+        restTemplate.put(
+                uri
+                , request
+        );
+    }
+
+    /**
+     * GET Request
      * @param port
      * @param callUri
      * @param reqMap
@@ -72,6 +99,28 @@ public class Utils {
                 , String.class
         );
 
+        log.info(result.getBody().toString());
+
         return result.getStatusCodeValue();
+    }
+    /**
+     * DELETE Request
+     * @param port
+     * @param callUri
+     * @param reqMap
+     * @param restTemplate
+     * @return
+     * @throws URISyntaxException
+     */
+    public void callDelVerificationApi(int port, String callUri, Map<String, Object> reqMap, TestRestTemplate restTemplate) throws URISyntaxException{
+        final String baseUrl = "http://localhost:"+port+ "/" + callUri;
+        URI uri = new URI(baseUrl);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "x-www-form-urlencoded", Charset.forName("UTF-8")));
+
+        restTemplate.delete(
+                uri + "?" + getUrlencodedParams(reqMap)
+        );
     }
 }
