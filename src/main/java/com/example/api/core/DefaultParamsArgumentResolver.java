@@ -34,28 +34,28 @@ public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResol
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        if(methodParameter.getParameterType().equals(DefaultParams.class)) {
+        if (methodParameter.getParameterType().equals(DefaultParams.class)) {
             DefaultParams defaultParams = new DefaultParams();
             defaultParams.setMap(new LinkedHashMap());
             Iterator iterator = nativeWebRequest.getParameterNames();
 
-            while(iterator.hasNext()) {
-                String key = (String)iterator.next();
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
                 String value = nativeWebRequest.getParameter(key);
                 Object json = ApiUtils.customJSONTokener(value);
-                if(json instanceof JSONObject){
+                if (json instanceof JSONObject) {
                     objectMapper.readValue(value, Map.class).forEach((k, v) ->
                             defaultParams.put((String) k, v))
                     ;
-                }else if (json instanceof JSONArray){
+                } else if (json instanceof JSONArray) {
                     defaultParams.put(key, objectMapper.readValue(value, List.class));
                 } else {
                     defaultParams.put(key, value);
                 }
             }
 
-            if(nativeWebRequest.getNativeRequest() instanceof MultipartHttpServletRequest){
-                MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)nativeWebRequest.getNativeRequest();
+            if (nativeWebRequest.getNativeRequest() instanceof MultipartHttpServletRequest) {
+                MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) nativeWebRequest.getNativeRequest();
                 defaultParams.put("multipartHttpServletRequest", multipartHttpServletRequest);
             }
 
@@ -63,11 +63,11 @@ public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResol
             ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = sra.getRequest().getSession();
 
-            if(StringUtils.equals(String.valueOf(session.getAttribute("ROLE")), "ADMIN")){
+            if (StringUtils.equals(String.valueOf(session.getAttribute("ROLE")), "ADMIN")) {
                 defaultParams.put("ROLE", session.getAttribute("ROLE"));
-            }else if(StringUtils.equals(String.valueOf(session.getAttribute("ROLE")), "USER")){
+            } else if (StringUtils.equals(String.valueOf(session.getAttribute("ROLE")), "USER")) {
                 defaultParams.put("ROLE", session.getAttribute("ROLE"));
-            }else{
+            } else {
                 defaultParams.put("ROLE", null);
             }
 

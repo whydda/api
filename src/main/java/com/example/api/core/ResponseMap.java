@@ -19,21 +19,22 @@ import java.util.Map;
  * Created by whydd on 2017-07-14.
  */
 @Slf4j
-public class ResponseMap{
+public class ResponseMap {
     private Map<String, Object> resMap;
 
     /**
      * 200
+     *
      * @return
      */
-    public Map<String, Object> ok() throws Exception{
+    public Map<String, Object> ok() throws Exception {
         this.resMap = new HashMap<>();
         this.resMap.put("code", HttpStatus.OK.value());
         this.resMap.put("message", "정상처리 되었습니다.");
         return this.responseMap();
     }
 
-    public Map<String, Object> ok(Map<String, Object> resMap) throws Exception{
+    public Map<String, Object> ok(Map<String, Object> resMap) throws Exception {
         this.resMap = new HashMap<>();
         this.resMap.put("resMap", resMap);
         this.resMap.put("code", HttpStatus.OK.value());
@@ -43,9 +44,10 @@ public class ResponseMap{
 
     /**
      * 401
+     *
      * @return
      */
-    public Map<String, Object> unauthorized() throws Exception{
+    public Map<String, Object> unauthorized() throws Exception {
         this.resMap = new HashMap<>();
         this.resMap.put("code", HttpStatus.UNAUTHORIZED.value());
         this.resMap.put("message", "잘못된 경로로 접근하였습니다. ");
@@ -54,16 +56,17 @@ public class ResponseMap{
 
     /**
      * 500
+     *
      * @return
      */
-    public Map<String, Object> internalServerError() throws Exception{
+    public Map<String, Object> internalServerError() throws Exception {
         this.resMap = new HashMap<>();
         this.resMap.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
         this.resMap.put("message", "서버에서 에러가 발생하였습니다.</br>관리자에게 문의하여 주십시오.");
         return this.responseMap();
     }
 
-    public Map<String, Object> commonError(int code, String message, Map<String, Object> dataMap) throws Exception{
+    public Map<String, Object> commonError(int code, String message, Map<String, Object> dataMap) throws Exception {
         this.resMap = new HashMap<>();
         this.resMap.put("code", code);
         this.resMap.put("message", message);
@@ -71,7 +74,7 @@ public class ResponseMap{
         return this.responseMap();
     }
 
-    private Map<String, Object> responseMap() throws Exception{
+    private Map<String, Object> responseMap() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, false);
         //objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);

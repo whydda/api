@@ -19,9 +19,8 @@ import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
-public class UserVerification extends Utils
-{
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class UserVerification extends Utils {
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -33,6 +32,7 @@ public class UserVerification extends Utils
 
     /**
      * 로그인 검증
+     *
      * @throws URISyntaxException
      * @throws IOException
      * @throws ClassNotFoundException
@@ -40,8 +40,8 @@ public class UserVerification extends Utils
     @Test
     public void login() throws URISyntaxException, IOException, ClassNotFoundException {
         Map<String, Object> reqMap = new HashMap<>();
-        reqMap.put("ID","whydda");
-        reqMap.put("PASSWORD","1234");
+        reqMap.put("ID", "whydda");
+        reqMap.put("PASSWORD", "1234");
 
         Assert.assertEquals(200, super.callPostVerificationApi(randomServerPort, "login", reqMap, this.restTemplate));
     }

@@ -16,48 +16,48 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages="com.example.api.service.mapper")
+@MapperScan(basePackages = "com.example.api.service.mapper")
 @EnableTransactionManagement
 public class DataSourceConfig {
 
-     @Autowired
-     private DataSourceProperties properties;
+    @Autowired
+    private DataSourceProperties properties;
 
-     @Bean(destroyMethod="close")
-     public DataSource dataSource() {
-    	 HikariConfig config = new HikariConfig();
-         config.setMaximumPoolSize(5); //나중에 변경확인
-         config.setDriverClassName(properties.getDriverClassName());
-         config.setJdbcUrl(properties.getUrl());
-         config.setUsername(properties.getUsername());
-         config.setPassword(properties.getPassword());
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setMaximumPoolSize(5); //나중에 변경확인
+        config.setDriverClassName(properties.getDriverClassName());
+        config.setJdbcUrl(properties.getUrl());
+        config.setUsername(properties.getUsername());
+        config.setPassword(properties.getPassword());
 
-         config.setPoolName("api-Common-HikariCP-Pool");
+        config.setPoolName("api-Common-HikariCP-Pool");
 
 //         config.addDataSourceProperty("useServerPrepStmts", "true");
 //         config.addDataSourceProperty("cachePrepStmts", "true");
 //         config.addDataSourceProperty("prepStmtCacheSize", "250");
 //         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
-         return new HikariDataSource(config);
-     }
+        return new HikariDataSource(config);
+    }
 
-     @Bean
-     public SqlSessionFactory sqlSessionFactory(DataSource ds) throws Exception {
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(DataSource ds) throws Exception {
 
-    	 SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-    	 sqlSessionFactory.setDataSource(ds);
-         //Mapper 설정
-         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:sqlmap/*Sql.xml"));
-         //Config 설정
-         sqlSessionFactory.setConfigLocation( new PathMatchingResourcePatternResolver().getResource("classpath:config/mybatis-config.xml"));
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(ds);
+        //Mapper 설정
+        sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:sqlmap/*Sql.xml"));
+        //Config 설정
+        sqlSessionFactory.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:config/mybatis-config.xml"));
 
-    	 return (SqlSessionFactory) sqlSessionFactory.getObject();
-     }
+        return (SqlSessionFactory) sqlSessionFactory.getObject();
+    }
 
-     @Bean
-     public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
+    @Bean
+    public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
 
-    	 return new SqlSessionTemplate(sqlSessionFactory);
-     }
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
 }
