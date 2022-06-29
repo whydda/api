@@ -23,7 +23,7 @@
 		<junit.jupiter.version>5.0.0-M4</junit.jupiter.version>
 		<junit.vintage.version>${junit.version}.0-M4</junit.vintage.version>
 		<junit.platform.version>1.0.0-M4</junit.platform.version>
-		<apache.poi.version>4.0.1</apache.poi.version>
+		<apache.poi.version>4.1.1</apache.poi.version>
 	</properties>
 
 	<dependencies>
@@ -161,7 +161,7 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<scope>compile</scope>
-			<version>3.11</version>
+			<version>4.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
